@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Practo for Animals — Trusted care for every animal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --paper:#F6F2EA;
+      --cream:#FFFDF8;
+      --ink:#1A1C1E;
+      --forest:#1E4D43;
+      --forest-2:#2A6B5C;
+      --clay:#C06C4F;
+      --clay-2:#A8563C;
+      --leaf:#A4BFA7;
+      --sand:#E9E1D8;
+      --mist:#DADDD5;
+      --muted:#6B756D;
+      --ease:cubic-bezier(.25,.46,.45,.94);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.55;overflow-x:hidden}
+    h1,h2,h3{font-family:'Fraunces',Georgia,serif;letter-spacing:-.03em;line-height:.98}
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(1220px,92%);margin:0 auto;padding:0 0 90px}
+
+    nav{padding:24px 0;position:fixed;inset:0 0 auto 0;z-index:30;background:rgba(246,242,234,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--sand)}
+    nav .inner{width:min(1160px,94%);margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+    .brand{font-family:'Fraunces',serif;font-weight:800;font-size:1.25rem;display:flex;align-items:center;gap:11px;letter-spacing:-0.02em}
+    .logo{width:34px;height:34px;border-radius:3px;background:var(--forest);display:grid;place-items:center}
+    .logo svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .navlinks{display:flex;gap:34px;align-items:center;font-size:.85rem;font-weight:600;color:var(--muted)}
+    .navlinks a{padding:6px 0;position:relative}
+    .navlinks a::after{content:'';position:absolute;bottom:2px;left:0;width:0;height:1.5px;background:var(--clay);transition:.3s var(--ease)}
+    .navlinks a:hover{color:var(--ink)}.navlinks a:hover::after{width:100%}
+    .nav-cta{font-family:'IBM Plex Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;background:var(--ink);color:var(--cream);padding:10px 16px;border-radius:3px}
+
+    .hero{padding:165px 0 40px;position:relative;overflow:hidden}
+    .hero-bg{position:absolute;inset:0;pointer-events:none;z-index:0}
+    .hero-bg svg{width:100%;height:100%;opacity:.15}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:end}
+    .hero-content{position:relative;z-index:1}
+    .kicker{font-family:'IBM Plex Mono',monospace;font-size:.63rem;text-transform:uppercase;letter-spacing:.14em;color:var(--forest);margin-bottom:16px;display:inline-flex;align-items:center;gap:8px;background:var(--sand);padding:7px 14px;border-radius:2px}
+    .kicker span{width:4px;height:4px;background:var(--clay);border-radius:50%}
+    .hero h1{font-size:clamp(2.6rem,5.2vw,4.8rem);max-width:620px;font-weight:800;line-height:1.0}
+    .hero h1 em{font-style:italic;color:var(--forest)}
+    .hero > p{color:var(--muted);max-width:420px;margin-top:22px;font-size:1.05rem;line-height:1.65}
+
+    .search-box{background:var(--cream);border:1px solid var(--ink);border-radius:2px;padding:8px;margin-top:32px;box-shadow:18px 18px 0 var(--sand);position:relative;z-index:2}
+    .search-inner{display:grid;grid-template-columns:1fr 1fr auto;gap:0;align-items:end}
+    .field{padding:18px 14px;border-right:1px solid var(--sand)}
+    .field:last-of-type{border-right:none}
+    .field label{font-family:'IBM Plex Mono',monospace;font-size:.55rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:8px}
+    .field input{appearance:none;border:none;background:transparent;padding:0;width:100%;font-size:1.05rem;color:var(--ink);outline:none;font-family:'Inter',sans-serif}
+    .field input::placeholder{color:var(--muted);opacity:.6}
+    .sbtn{height:100%;background:var(--forest);color:#fff;border:none;padding:0 26px;font-family:'Fraunces',serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:.2s}
+    .sbtn:hover{background:var(--forest-2)}
+    .emergency{display:flex;align-items:center;gap:14px;margin-top:26px;padding-top:24px}
+    .emergency p{font-size:.92rem;color:var(--muted);max-width:360px;line-height:1.5}
+    .emergency p strong{color:var(--clay);font-weight:700}
+    .amb-btn{font-family:'IBM Plex Mono',monospace;font-size:.66rem;text-transform:uppercase;letter-spacing:.06em;background:var(--clay);color:#fff;padding:10px 18px;border-radius:2px;margin-left:auto}
+    .amb-btn:hover{background:var(--clay-2)}
+
+    .hero-art{position:relative;height:480px;z-index:1}
+    .illustration{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center}
+    .illustration svg{width:100%;height:100%;max-height:420px}
+    .float-card{position:absolute;background:var(--cream);border:1px solid var(--ink);border-radius:2px;padding:14px 16px;box-shadow:8px 8px 0 var(--sand);font-size:.82rem}
+    .float-card strong{font-family:'Fraunces',serif;display:block;font-size:.98rem}
+    .float-card small{color:var(--muted);font-family:'IBM Plex Mono';font-size:.6rem;text-transform:uppercase;letter-spacing:.06em}
+    .float-card.c1{top:40px;left:0;animation:f1 7s ease-in-out infinite}
+    .float-card.c2{top:130px;right:-10px;animation:f2 8s ease-in-out infinite}
+    .float-card.c3{bottom:90px;left:30px;animation:f1 6s ease-in-out infinite reverse}
+    @keyframes f1{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-10px) rotate(1deg)}}
+    @keyframes f2{0%,100%{transform:translateY(0) rotate(1deg)}50%{transform:translateY(-12px) rotate(-1deg)}}
+
+    .insight{display:flex;gap:12px;margin-top:48px;flex-wrap:wrap}
+    .insight div{border-top:2px solid var(--forest);padding-top:14px;min-width:130px}
+    .insight b{font-family:'Fraunces',serif;font-size:1.9rem;color:var(--forest);line-height:1}
+    .insight span{font-size:.78rem;color:var(--muted);display:block;margin-top:4px}
+
+    .filters{padding:60px 0 26px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .chip{padding:10px 20px;border-radius:2px;border:1px solid var(--sand);background:var(--cream);font-size:.85rem;font-weight:600;cursor:pointer;transition:.2s var(--ease);font-family:'Inter',sans-serif;color:var(--muted)}
+    .chip:hover{border-color:var(--forest);color:var(--forest)}
+    .chip.active{background:var(--forest);color:#fff;border-color:var(--forest)}
+    .results{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;padding-bottom:18px;border-bottom:1px solid var(--sand)}
+    .results p{color:var(--muted);font-size:.9rem}
+    .results strong{color:var(--ink);font-family:'Fraunces',serif}
+    .sort{font-size:.83rem;font-weight:600;color:var(--forest);cursor:pointer;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.04em}
+
+    .bento{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px}
+    .card{background:var(--cream);border:1px solid var(--sand);border-radius:3px;padding:26px;position:relative;transition:.35s var(--ease);display:flex;flex-direction:column;gap:14px}
+    .card:hover{border-color:var(--ink);box-shadow:14px 14px 0 var(--sand);transform:translate(-4px,-4px)}
+    .card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+    .card h3{font-size:1.25rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .card small{display:block;color:var(--muted);font-size:.82rem;margin-top:6px}
+    .rating{font-family:'IBM Plex Mono',monospace;font-size:.7rem;background:var(--sand);color:var(--forest);padding:6px 12px;border-radius:2px;letter-spacing:.05em}
+    .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+    .tag{font-family:'IBM Plex Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.04em;padding:6px 10px;border:1px solid var(--mist);border-radius:2px;color:var(--forest);background:#fff}
+    .card p{color:var(--muted);font-size:.88rem;line-height:1.6;margin-top:4px}
+    .meta{margin-top:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-top:16px;border-top:1px solid var(--sand)}
+    .meta > div{text-align:center}
+    .meta strong{font-family:'Fraunces',serif;font-size:1.1rem;color:var(--ink);display:block;line-height:1}
+    .meta span{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-family:'IBM Plex Mono',monospace}
+    .actions{display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:6px}
+    .actions button,.actions a{border:none;background:var(--forest);color:#fff;padding:12px 18px;font-family:'Fraunces',serif;font-weight:700;font-size:.82rem;border-radius:2px;cursor:pointer;text-align:center;display:inline-flex;justify-content:center;align-items:center}
+    .actions .secondary{background:transparent;border:1px solid var(--sand);color:var(--muted);font-family:'Inter',sans-serif;font-weight:600}
+    .actions .secondary:hover{border-color:var(--ink);color:var(--ink)}
+
+    .duo{margin-top:100px;display:grid;grid-template-columns:1fr 1fr;gap:28px}
+    .mcard{background:var(--cream);border:1px solid var(--sand);border-radius:3px;padding:42px;position:relative;overflow:hidden;transition:.35s}
+    .mcard:hover{box-shadow:16px 16px 0 var(--sand);transform:translate(-4px,-4px);border-color:var(--ink)}
+    .mcard h2{font-size:1.75rem;max-width:280px}
+    .mcard p{color:var(--muted);margin-top:12px;line-height:1.6;max-width:340px}
+    .mcard .row{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+    .mcard.alt{background:var(--forest);color:var(--cream);border-color:var(--forest)}
+    .mcard.alt h2,.mcard.alt p{color:var(--cream)}
+    .mcard.alt p{opacity:.75}
+    .btn{padding:12px 22px;border-radius:2px;font-weight:700;font-size:.86rem;display:inline-flex;align-items:center;gap:6px;transition:.2s;border:none;cursor:pointer;font-family:'Fraunces',serif}
+    .btn-cream{background:#fff;color:var(--forest)}
+    .btn-cream:hover{background:var(--sand)}
+    .btn-clay{background:var(--clay);color:#fff}
+    .btn-clay:hover{background:var(--clay-2)}
+    .scribble{position:absolute;right:-40px;bottom:-40px;width:180px;height:180px;opacity:.06;pointer-events:none}
+
+    footer{padding:0 0 50px;text-align:center;color:var(--muted);font-size:.84rem}
+    footer .wrap{padding:30px 0;border-top:1px solid var(--sand)}
+
+    @media (max-width:920px){
+      .hero-grid{grid-template-columns:1fr}
+      .hero-art{height:340px;margin-top:30px}
+      .navlinks{display:none}
+      .search-inner{grid-template-columns:1fr}
+      .field{border-right:none;border-bottom:1px solid var(--sand)}
+      .sbtn{width:100%;padding:18px}
+      .duo{grid-template-columns:1fr}
+      .bento{grid-template-columns:1fr}
+      .emergency{flex-wrap:wrap}
+      .amb-btn{margin-left:0;width:100%;text-align:center}
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="inner">
+      <a href="index.html" class="brand">
+        <div class="logo"><svg viewBox="0 0 24 24"><circle cx="8" cy="10" r="2"/><circle cx="16" cy="10" r="2"/><path d="M6.5 14c.8 2.5 3 4 5.5 4s4.7-1.5 5.5-4"/></svg></div>
+        Practo for Animals
+      </a>
+      <div class="navlinks">
+        <a href="#find">Find care</a>
+        <a href="#services">Services</a>
+        <a href="#business">List business</a>
+        <a href="index.html" class="nav-cta">Back to concepts</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg">
+      <svg viewBox="0 0 1440 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs><pattern id="paws" width="90" height="90" patternUnits="userSpaceOnUse"><path d="M42 42c-2 0-4 1-5 3-1 2 0 4 2 5 3 2 7 1 8-2 1-3-1-5-4-6zM30 34c-3-1-6 1-7 4s1 6 4 7c3 1 6-1 7-4s-1-6-4-7zM45 26c-3 0-6 2-6 5s3 5 6 5 5-2 5-5-2-5-5-5zM60 34c-3 1-5 4-4 7 1 3 4 5 7 4s5-4 4-7c-1-2-4-4-7-4zM38 58c-3-1-7 0-9 3-2 3-1 7 2 9 4 2 9 0 11-3 2-4 0-8-4-9z" fill="#1E4D43" fill-opacity=".12"/></pattern></defs>
+        <rect width="1440" height="700" fill="url(#paws)"/>
+        <circle cx="1240" cy="180" r="140" stroke="#1E4D43" stroke-width="1" fill="none" opacity=".18"/>
+        <circle cx="1180" cy="260" r="80" stroke="#C06C4F" stroke-width="1" fill="none" opacity=".22"/>
+      </svg>
+    </div>
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="kicker"><span></span>India's animal-care network</div>
+          <h1>Find trusted vets, hospitals &amp; boarding for <em>every animal</em>.</h1>
+          <p>Verified providers, live availability and one-tap booking — for pets, farm animals and strays. Starting with Bangalore.</p>
+
+          <div class="search-box">
+            <div class="search-inner">
+              <div class="field">
+                <label>What do you need?</label>
+                <input list="services" placeholder="Try 'Vet clinic' or 'Ambulance'" />
+                <datalist id="services"><option>Veterinary clinic</option><option>24/7 hospital</option><option>Diagnostics</option><option>Ambulance</option><option>Boarding</option><option>NGO / Shelter</option></datalist>
+              </div>
+              <div class="field">
+                <label>Near</label>
+                <input placeholder="City or neighbourhood" />
+              </div>
+              <button class="sbtn" id="searchBtn">Search</button>
+            </div>
+          </div>
+
+          <div class="emergency">
+            <p><strong>Emergency?</strong> Use the 24/7 filter or call directly from a hospital listing.</p>
+            <a class="amb-btn" href="#">Request ambulance</a>
+          </div>
+
+          <div class="insight">
+            <div><b>~$1B</b><span>India pet care by 2025</span></div>
+            <div><b>2.3 hrs</b><span>avg time to find 24/7 care</span></div>
+            <div><b>68%</b><span>use mobile search first</span></div>
+          </div>
+        </div>
+
+        <div class="hero-art">
+          <div class="illustration">
+            <svg viewBox="0 0 360 400" preserveAspectRatio="xMidYMid meet" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M90 310c-12-50 25-92 75-92s87 42 75 92H90z" stroke="#1E4D43" stroke-width="2" fill="#A4BFA7" fill-opacity=".2"/>
+              <ellipse cx="150" cy="250" rx="38" ry="32" stroke="#1E4D43" stroke-width="2" fill="#fff"/>
+              <circle cx="138" cy="244" r="4" fill="#1E4D43"/>
+              <circle cx="162" cy="244" r="4" fill="#1E4D43"/>
+              <ellipse cx="150" cy="262" rx="6" ry="8" fill="#C06C4F"/>
+              <path d="M142 270c4 5 12 5 16 0" stroke="#1E4D43" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M116 228c-10-14-4-30 8-34 10-3 18 8 18 20M184 228c10-14 4-30-8-34-10-3-18 8-18 20" stroke="#1E4D43" stroke-width="2" fill="none"/>
+              <path d="M110 320c8-10 22-10 26 4M184 324c8-10 24-12 28-2" stroke="#1E4D43" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M130 330c-10 0-10 22 0 22M170 330c10 0 10 22 0 22" stroke="#1E4D43" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="270" cy="140" r="16" stroke="#1E4D43" stroke-width="2" fill="#fff"/>
+              <circle cx="264" cy="136" r="3" fill="#1E4D43"/>
+              <circle cx="276" cy="136" r="3" fill="#1E4D43"/>
+              <path d="M260 126c-6-4-12-2-14 4M280 126c6-4 12-2 14 4" stroke="#1E4D43" stroke-width="2" fill="none"/>
+              <path d="M265 150c2 4 8 4 10 0" stroke="#1E4D43" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M70 330h220" stroke="var(--sand)" stroke-width="1" stroke-dasharray="4 4"/>
+              <circle cx="60" cy="110" r="40" fill="#C06C4F" fill-opacity=".08"/>
+              <rect x="240" y="200" width="50" height="70" rx="2" stroke="#DADDD5" stroke-width="1" fill="none"/>
+              <rect x="245" y="208" width="40" height="14" fill="#DADDD5"/>
+              <line x1="245" y1="234" x2="280" y2="234" stroke="#DADDD5" stroke-width="1"/>
+              <line x1="245" y1="248" x2="280" y2="248" stroke="#DADDD5" stroke-width="1"/>
+              <line x1="245" y1="262" x2="270" y2="262" stroke="#DADDD5" stroke-width="1"/>
+            </svg>
+          </div>
+          <div class="float-card c1"><strong>Pawsome Pet Hospital</strong><small>Open · 0.8 km</small></div>
+          <div class="float-card c2"><strong>PetRescue Ambulance</strong><small>&lt;15 min arrival</small></div>
+          <div class="float-card c3"><strong>Stray Care Bengaluru</strong><small>Shelter · NGO</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="wrap" id="find">
+    <div class="filters">
+      <button class="chip active" data-filter="all">All providers</button>
+      <button class="chip" data-filter="vet">Vet clinic</button>
+      <button class="chip" data-filter="hospital">24/7 hospital</button>
+      <button class="chip" data-filter="diag">Diagnostics</button>
+      <button class="chip" data-filter="ambulance">Ambulance</button>
+      <button class="chip" data-filter="boarding">Boarding</button>
+      <button class="chip" data-filter="ngo">NGO</button>
+    </div>
+
+    <div class="results">
+      <p>Showing <strong>6 verified providers</strong> near Indiranagar, Bangalore</p>
+      <span class="sort">Nearest first ▾</span>
+    </div>
+
+    <div class="bento">
+      <article class="card" data-type="hospital">
+        <div class="card-head"><div><h3>Pawsome Pet Hospital</h3><small>Indiranagar · 0.8 km away</small></div><span class="rating">★ 4.8</span></div>
+        <div class="tags"><span class="tag">24/7</span><span class="tag">Surgery</span><span class="tag">ICU</span></div>
+        <div class="meta"><div><strong>₹₹</strong><span>Avg fee</span></div><div><strong>&lt;10m</strong><span>Wait</span></div><div><strong>Open</strong><span>24 hrs</span></div></div>
+        <p>Multi-speciality hospital with oxygen, ICU, pharmacy and home pickup. English, Kannada and Hindi staff.</p>
+        <div class="actions"><a class="btn" href="#">Book</a><a class="secondary" href="#">Call</a></div>
+      </article>
+
+      <article class="card" data-type="vet">
+        <div class="card-head"><div><h3>Furry Friends Vet Clinic</h3><small>Jeevanbheemanagar · 1.2 km</small></div><span class="rating">★ 4.6</span></div>
+        <div class="tags"><span class="tag">Vaccination</span><span class="tag">Dental</span></div>
+        <div class="meta"><div><strong>₹</strong><span>Avg fee</span></div><div><strong>15m</strong><span>Wait</span></div><div><strong>Till 9PM</strong><span>Open</span></div></div>
+        <p>Cat- and dog-friendly clinic with online reports and WhatsApp follow-up reminders.</p>
+        <div class="actions"><a class="btn" href="#">Book</a><a class="secondary" href="#">Call</a></div>
+      </article>
+
+      <article class="card" data-type="ambulance">
+        <div class="card-head"><div><h3>PetRescue Ambulance</h3><small>HAL · 2.4 km</small></div><span class="rating">★ 4.9</span></div>
+        <div class="tags"><span class="tag">Emergency</span><span class="tag">Oxygen</span><span class="tag">Strays ok</span></div>
+        <div class="meta"><div><strong>₹₹</strong><span>Base fare</span></div><div><strong>&lt;15m</strong><span>Arrival</span></div><div><strong>Live</strong><span>Tracking</span></div></div>
+        <p>Dedicated animal ambulance with trained handlers, stretcher support and live location sharing.</p>
+        <div class="actions"><a class="btn" href="#">Request pickup</a><a class="secondary" href="#">Track</a></div>
+      </article>
+
+      <article class="card" data-type="diag">
+        <div class="card-head"><div><h3>VetLab Diagnostics</h3><small>Old Madras Road · 1.5 km</small></div><span class="rating">★ 4.5</span></div>
+        <div class="tags"><span class="tag">Blood tests</span><span class="tag">X-Ray</span><span class="tag">Home sample</span></div>
+        <div class="meta"><div><strong>₹₹</strong><span>Avg fee</span></div><div><strong>6 hrs</strong><span>Reports</span></div><div><strong>7–8PM</strong><span>Open</span></div></div>
+        <p>Reports delivered via WhatsApp. Home sample collection available for pets and small livestock.</p>
+        <div class="actions"><a class="btn" href="#">Book test</a><a class="secondary" href="#">Call</a></div>
+      </article>
+
+      <article class="card" data-type="boarding">
+        <div class="card-head"><div><h3>Happy Tails Boarding</h3><small>Koramangala · 3.1 km</small></div><span class="rating">★ 4.7</span></div>
+        <div class="tags"><span class="tag">Boarding</span><span class="tag">Grooming</span><span class="tag">CCTV</span></div>
+        <div class="meta"><div><strong>₹₹</strong><span>Per day</span></div><div><strong>24 hrs</strong><span>Check-in</span></div><div><strong>All week</strong><span>Open</span></div></div>
+        <p>Climate-controlled kennels, daily walks, video updates and a vet on call for boarders.</p>
+        <div class="actions"><a class="btn" href="#">Reserve</a><a class="secondary" href="#">Tour</a></div>
+      </article>
+
+      <article class="card" data-type="ngo">
+        <div class="card-head"><div><h3>Stray Care Bengaluru</h3><small>Domlur · 1.9 km</small></div><span class="rating">★ 4.8</span></div>
+        <div class="tags"><span class="tag">NGO</span><span class="tag">Shelter</span><span class="tag">Adoption</span></div>
+        <div class="meta"><div><strong>Free</strong><span>Adoption</span></div><div><strong>On req.</strong><span>Pickup</span></div><div><strong>9–7PM</strong><span>Open</span></div></div>
+        <p>Volunteer-run shelter with ABC programme. Accepts donations, fosters and night rescues.</p>
+        <div class="actions"><a class="btn" href="#">Donate / Volunteer</a><a class="secondary" href="#">Call</a></div>
+      </article>
+    </div>
+
+    <div class="duo" id="business">
+      <div class="mcard alt">
+        <h2>List your animal-care business for free</h2>
+        <p>Reach pet parents, farmers and rescuers nearby. Manage timings, services and enquiries from one dashboard.</p>
+        <div class="row"><a class="btn btn-cream" href="#">List your business →</a></div>
+      </div>
+      <div class="mcard">
+        <svg class="scribble" viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="none" stroke="#1E4D43" stroke-width="1" stroke-dasharray="4 4"/><circle cx="50" cy="50" r="22" fill="none" stroke="#C06C4F" stroke-width="1" stroke-dasharray="4 4"/></svg>
+        <h2>Spotted outdated info?</h2>
+        <p>Help keep listings accurate so every user finds the right care at the right time.</p>
+        <div class="row"><a class="btn btn-clay" href="#">Submit correction</a></div>
+      </div>
+    </div>
+  </main>
+
+  <footer><div class="wrap">Practo for Animals · concept prototype · 2026</div></footer>
+
+  <script>
+    document.querySelectorAll('.chip').forEach(btn => btn.addEventListener('click', () => {
+      document.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      document.querySelectorAll('.card').forEach(c => c.style.display = (f==='all'||c.dataset.type===f)?'':'none');
+    }));
+    document.getElementById('searchBtn').addEventListener('click', function(){ const t=this; t.textContent='Locating…'; setTimeout(()=>t.textContent='Search',700); });
+  </script>
+</body>
+</html>

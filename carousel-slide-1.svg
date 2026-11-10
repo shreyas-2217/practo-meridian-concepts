@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
+  <defs>
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#065F7C"/>
+      <stop offset="100%" stop-color="#0A7EA5"/>
+    </linearGradient>
+    <linearGradient id="saffronGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E57A44"/>
+      <stop offset="100%" stop-color="#C95D35"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1080" height="1080" fill="#F8F6F2"/>
+
+  <!-- ambient blobs -->
+  <circle cx="940" cy="110" r="200" fill="#EDE9E2" opacity=".7"/>
+  <circle cx="90" cy="980" r="240" fill="#D8E7D9" opacity=".5"/>
+
+  <!-- top bar -->
+  <rect x="64" y="60" width="952" height="84" rx="20" fill="#FFFFFF"/>
+  <rect x="100" y="88" width="32" height="32" rx="9" fill="url(#tealGrad)"/>
+  <text x="142" y="110" font-family="Space Grotesk, sans-serif" font-size="30" font-weight="700" fill="#10141B">Practo for Animals</text>
+  <text x="840" y="110" font-family="IBM Plex Mono, monospace" font-size="17" font-weight="500" fill="#667080">carousel</text>
+  <circle cx="910" cy="102" r="5" fill="#E57A44"/>
+
+  <!-- headline -->
+  <text x="540" y="300" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="88" font-weight="700" fill="#10141B">
+    <tspan x="540" dy="0">5 signs your pet</tspan>
+    <tspan x="540" dy="102">needs a vet visit</tspan>
+  </text>
+
+  <!-- accent bar -->
+  <rect x="400" y="490" width="280" height="11" rx="5.5" fill="url(#saffronGrad)"/>
+
+  <!-- icon grid cards -->
+  <g transform="translate(120, 550)">
+    <g transform="translate(0, 0)">
+      <rect width="170" height="170" rx="24" fill="#FFFFFF" stroke="#EDE9E2" stroke-width="2"/>
+      <circle cx="85" cy="68" r="26" fill="#E4F3F7"/>
+      <path d="M70 62h12v12H70z M74 58h4v4h-4z" fill="#065F7C" transform="translate(5,5) scale(1.1)" opacity="0"/>
+      <text x="85" y="78" text-anchor="middle" font-size="42">🍖</text>
+      <text x="85" y="138" text-anchor="middle" font-family="Inter, sans-serif" font-size="19" font-weight="650" fill="#065F7C">No appetite</text>
+    </g>
+    <g transform="translate(190, 0)">
+      <rect width="170" height="170" rx="24" fill="#FFFFFF" stroke="#EDE9E2" stroke-width="2"/>
+      <circle cx="85" cy="68" r="26" fill="#F8F6F2"/>
+      <text x="85" y="78" text-anchor="middle" font-size="42">😴</text>
+      <text x="85" y="138" text-anchor="middle" font-family="Inter, sans-serif" font-size="19" font-weight="650" fill="#065F7C">Lethargy</text>
+    </g>
+    <g transform="translate(380, 0)">
+      <rect width="170" height="170" rx="24" fill="#FFFFFF" stroke="#EDE9E2" stroke-width="2"/>
+      <circle cx="85" cy="68" r="26" fill="#FFF2EF"/>
+      <text x="85" y="78" text-anchor="middle" font-size="42">🤢</text>
+      <text x="85" y="138" text-anchor="middle" font-family="Inter, sans-serif" font-size="19" font-weight="650" fill="#065F7C">Vomiting</text>
+    </g>
+    <g transform="translate(570, 0)">
+      <rect width="170" height="170" rx="24" fill="#FFFFFF" stroke="#EDE9E2" stroke-width="2"/>
+      <circle cx="85" cy="68" r="26" fill="#F8F6F2"/>
+      <text x="85" y="78" text-anchor="middle" font-size="42">🫁</text>
+      <text x="85" y="138" text-anchor="middle" font-family="Inter, sans-serif" font-size="19" font-weight="650" fill="#065F7C">Breathing</text>
+    </g>
+    <g transform="translate(760, 0)">
+      <rect width="170" height="170" rx="24" fill="#FFFFFF" stroke="#EDE9E2" stroke-width="2"/>
+      <circle cx="85" cy="68" r="26" fill="#E4F3F7"/>
+      <text x="85" y="78" text-anchor="middle" font-size="42">🦴</text>
+      <text x="85" y="138" text-anchor="middle" font-family="Inter, sans-serif" font-size="19" font-weight="650" fill="#065F7C">Limping</text>
+    </g>
+  </g>
+
+  <!-- CTA pill -->
+  <rect x="296" y="840" width="488" height="76" rx="38" fill="url(#tealGrad)"/>
+  <text x="540" y="886" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="27" font-weight="700" fill="#FFFFFF" letter-spacing="-.02em">Find a trusted vet near you</text>
+
+  <!-- dots -->
+  <circle cx="460" cy="972" r="8" fill="#065F7C"/>
+  <circle cx="500" cy="972" r="8" fill="#D8E7D9"/>
+  <circle cx="540" cy="972" r="8" fill="#D8E7D9"/>
+  <circle cx="580" cy="972" r="8" fill="#D8E7D9"/>
+  <circle cx="620" cy="972" r="8" fill="#D8E7D9"/>
+
+  <!-- watermark paw -->
+  <g transform="translate(950, 900)" opacity=".08">
+    <ellipse cx="35" cy="38" rx="22" ry="20" fill="#065F7C"/>
+    <circle cx="10" cy="14" r="9" fill="#065F7C"/>
+    <circle cx="35" cy="6" r="9" fill="#065F7C"/>
+    <circle cx="60" cy="14" r="9" fill="#065F7C"/>
+    <circle cx="70" cy="40" r="8" fill="#065F7C"/>
+  </g>
+</svg>

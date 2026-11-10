@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Content Engine — AI carousel workflow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --paper:#F3F0EB;
+      --card:#FFFFFF;
+      --ink:#1A1C1E;
+      --navy:#0C3548;
+      --teal:#2C7F78;
+      --coral:#C8553C;
+      --sand:#DCD6CD;
+      --sage:#8CAE9D;
+      --muted:#6B6A65;
+      --line:#CBC5BC;
+      --ease:cubic-bezier(.25,.46,.45,.94);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.55}
+    h1,h2,h3{font-family:'Fraunces',Georgia,serif;letter-spacing:-.03em;line-height:.98}
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(1180px,92%);margin:0 auto;padding:0 0 90px}
+
+    nav{padding:22px 0;position:fixed;inset:0 0 auto 0;z-index:30;background:rgba(243,240,235,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--sand)}
+    nav .inner{width:min(1160px,94%);margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+    .brand{font-family:'Fraunces',serif;font-weight:800;font-size:1.25rem;display:flex;align-items:center;gap:10px;letter-spacing:-0.02em}
+    .brand::before{content:'';width:9px;height:9px;background:var(--coral);border-radius:50%}
+    .brand-badge{font-family:'IBM Plex Mono',monospace;font-size:.55rem;text-transform:uppercase;letter-spacing:.08em;background:var(--sand);color:var(--navy);padding:4px 8px;border-radius:2px;margin-left:8px}
+    .btn{padding:12px 22px;border-radius:2px;font-weight:700;font-size:.85rem;display:inline-flex;align-items:center;gap:7px;transition:.22s var(--ease);border:none;cursor:pointer}
+    .btn-ghost{background:#fff;border:1px solid var(--sand);color:var(--ink);font-family:'Inter',sans-serif}
+    .btn-ghost:hover{border-color:var(--navy);color:var(--navy);transform:translateY(-2px)}
+    .btn-primary{background:var(--navy);color:#fff;font-family:'Fraunces',serif}
+    .btn-primary:hover{background:var(--teal);transform:translateY(-2px)}
+
+    .hero{padding:185px 0 100px;position:relative;overflow:hidden}
+    .hero::after{content:"";position:absolute;right:-80px;top:-80px;width:340px;height:340px;border:1px solid var(--line);border-radius:50%;opacity:.35}
+    .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.14em;color:var(--coral);margin-bottom:20px;display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--sand);padding:7px 14px;border-radius:2px}
+    .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--coral)}
+    .hero h1{font-size:clamp(2.6rem,5vw,4.2rem);max-width:520px;font-weight:800}
+    .hero h1 em{font-style:italic;color:var(--teal)}
+    .hero p{color:var(--muted);max-width:410px;margin-top:16px;font-size:1.05rem;line-height:1.65}
+    .impact{display:flex;gap:12px;margin-top:40px;flex-wrap:wrap}
+    .im-card{border-top:2px solid var(--navy);padding-top:14px;min-width:120px}
+    .im-card strong{font-family:'Fraunces',serif;font-size:1.7rem;display:block;color:var(--navy);line-height:1}
+    .im-card span{font-size:.76rem;color:var(--muted)}
+
+    .hero-visual{background:var(--card);border:1px solid var(--sand);border-radius:3px;padding:28px;box-shadow:22px 22px 0 var(--sand);position:relative;z-index:1;transform:rotate(1deg)}
+    .hero-visual:hover{transform:rotate(0deg)}
+    .flow-preview{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .prev-step{background:var(--paper);border:1px solid var(--sand);border-radius:2px;padding:16px;transition:.25s}
+    .prev-step:hover{border-color:var(--navy);transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--sand)}
+    .prev-meta{font-family:'IBM Plex Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.06em;color:var(--coral);margin-bottom:6px}
+    .prev-title{font-weight:700;font-size:.98rem}
+    .prev-desc{font-size:.78rem;color:var(--muted);margin-top:4px}
+
+    .section-head{margin-bottom:46px}
+    .section-head h2{font-size:2.3rem}
+    .section-head p{color:var(--muted);margin-top:10px;max-width:520px;line-height:1.6}
+
+    .workflow{display:flex;flex-direction:column;gap:0;position:relative;padding-left:28px}
+    .workflow::before{content:'';position:absolute;left:62px;top:44px;bottom:44px;width:1px;background:repeating-linear-gradient(to bottom,var(--line) 0,var(--line) 8px,transparent 8px,transparent 16px)}
+    .step{background:var(--card);border:1px solid var(--sand);border-radius:3px;padding:28px 32px;display:grid;grid-template-columns:64px 1fr;gap:26px;align-items:start;position:relative;z-index:1;margin-bottom:20px;transition:.35s var(--ease)}
+    .step:hover{border-color:var(--ink);box-shadow:14px 14px 0 var(--sand);transform:translate(-4px,-4px)}
+    .num{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:1.4rem;color:#fff;background:var(--navy);width:64px;height:64px;border-radius:2px;display:grid;place-items:center;transition:.3s var(--ease)}
+    .step:hover .num{background:var(--coral)}
+    .step h3{font-size:1.25rem;margin-bottom:8px}
+    .step p{font-size:.95rem;color:var(--muted);margin-bottom:16px;line-height:1.6}
+    .tool-set{display:flex;gap:8px;flex-wrap:wrap}
+    .tool{font-family:'IBM Plex Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.04em;background:var(--paper);border:1px solid var(--sand);color:var(--navy);padding:6px 12px;border-radius:2px}
+    .highlight{border-color:var(--navy);background:#F8F7F4}
+    .highlight .num{background:var(--coral)}
+
+    .sample{margin-top:110px;background:var(--card);border:1px solid var(--sand);border-radius:3px;padding:54px;position:relative;overflow:hidden;box-shadow:22px 22px 0 var(--sand)}
+    .sample-grid{display:grid;grid-template-columns:.9fr 1fr;gap:60px;align-items:start}
+    .slide{border:1px solid var(--sand);border-radius:3px;padding:12px;background:#fff;box-shadow:8px 8px 0 var(--sand);transition:.35s;display:inline-block}
+    .slide:hover{transform:scale(1.02) rotate(-1deg)}
+    .slide img{width:100%;border-radius:2px;display:block;max-width:460px}
+    .sample h3{font-size:1.3rem;margin-bottom:18px}
+    .sample ol{padding-left:0;list-style:none;font-size:.95rem;color:var(--muted);line-height:1.9}
+    .sample li{padding-left:36px;position:relative;border-bottom:1px solid var(--sand)}
+    .sample li::before{content:attr(data-i);position:absolute;left:0;top:0;font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--coral);font-weight:700}
+    .sample li strong{color:var(--ink)}
+    .sample li:last-child{border-bottom:none}
+    .sample .caption{color:var(--muted);font-size:.92rem;margin-top:24px;line-height:1.55;background:var(--paper);padding:18px 22px;border-radius:2px;border:1px solid var(--sand)}
+    .takeaways{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
+    .box{border-top:2px solid var(--navy);padding-top:18px;transition:.25s var(--ease)}
+    .box:hover{border-color:var(--coral)}
+    .box h4{font-size:1.05rem;margin-bottom:6px;font-family:'Fraunces',serif}
+    .box p{font-size:.86rem;color:var(--muted);line-height:1.5}
+
+    footer{padding:0 0 50px;text-align:center;color:var(--muted);font-size:.85rem}
+    footer .wrap{padding:30px 0;border-top:1px solid var(--sand)}
+
+    @media (max-width:900px){
+      .hero-grid{grid-template-columns:1fr;gap:50px}
+      .flow-preview{grid-template-columns:1fr}
+      .sample-grid{grid-template-columns:1fr}
+      .takeaways{grid-template-columns:1fr}
+      .step{grid-template-columns:48px 1fr;gap:18px;padding:22px}
+      .num{width:48px;height:48px;font-size:1.1rem}
+      .workflow{padding-left:0}
+      .workflow::before{display:none}
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="inner">
+      <a href="index.html" class="brand">Content Engine <span class="brand-badge">v1.0</span></a>
+      <a href="index.html" class="btn btn-ghost">Back</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">AI content workflow</div>
+          <h1>Turn raw ideas into polished carousels — <em>without a designer.</em></h1>
+          <p>A repeatable system for the founder to produce Instagram and LinkedIn carousels using AI research, copy generation and templated design.</p>
+          <div class="impact">
+            <div class="im-card"><strong>10 hrs</strong><span>saved per carousel</span></div>
+            <div class="im-card"><strong>~₹8K</strong><span>designer cost avoided</span></div>
+            <div class="im-card"><strong>&lt;1 hr</strong><span>founder review</span></div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="flow-preview">
+            <div class="prev-step"><div class="prev-meta">01 · Capture</div><div class="prev-title">Idea in Notion</div><div class="prev-desc">Founder submits topic + angle</div></div>
+            <div class="prev-step"><div class="prev-meta">02 · Research</div><div class="prev-title">ChatGPT + Perplexity</div><div class="prev-desc">Outline with sources</div></div>
+            <div class="prev-step"><div class="prev-meta">03 · Copy</div><div class="prev-title">Claude / GPT-4o</div><div class="prev-desc">Headlines + captions</div></div>
+            <div class="prev-step"><div class="prev-meta">04 · Produce</div><div class="prev-title">Canva + Brand Kit</div><div class="prev-desc">Export PNGs + PDF</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>End-to-end workflow</h2>
+        <p>Connected tools with human review right before publishing.</p>
+      </div>
+      <div class="workflow">
+        <div class="step">
+          <div class="num">1</div>
+          <div>
+            <h3>Capture the raw idea</h3>
+            <p>Founder drops a topic, audience and key message into a Notion form, Airtable base or voice note. A structured prompt keeps inputs consistent.</p>
+            <div class="tool-set"><span class="tool">Notion</span><span class="tool">Airtable</span><span class="tool">Typeform</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <div>
+            <h3>Research & structure</h3>
+            <p>An AI agent sources facts, summarises credible references and proposes a slide-by-slide outline: hook, body slides and CTA.</p>
+            <div class="tool-set"><span class="tool">ChatGPT / Claude</span><span class="tool">Perplexity API</span><span class="tool">Make / n8n</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <div>
+            <h3>Generate copy</h3>
+            <p>Every slide gets a ≤6-word headline, 1–2 lines of body copy, plus caption and hashtags for the post.</p>
+            <div class="tool-set"><span class="tool">Claude</span><span class="tool">GPT-4o</span><span class="tool">Brand voice doc</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">4</div>
+          <div>
+            <h3>Create visual direction</h3>
+            <p>AI builds on-brand image prompts and icon directions using the product palette. No stock-searching.</p>
+            <div class="tool-set"><span class="tool">Midjourney</span><span class="tool">DALL·E 3</span><span class="tool">Canva Brand Kit</span></div>
+          </div>
+        </div>
+        <div class="step highlight">
+          <div class="num">5</div>
+          <div>
+            <h3>Produce editable carousel</h3>
+            <p>Canva Bulk Create or the Canva API fills a locked template with copy and visuals, exporting PNGs + PDF.</p>
+            <div class="tool-set"><span class="tool">Canva</span><span class="tool">Canva API</span><span class="tool">Google Slides API</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">6</div>
+          <div>
+            <h3>Review, edit & publish</h3>
+            <p>Founder tweaks anything, then exports and schedules. Optional Buffer/Later integration queues posts.</p>
+            <div class="tool-set"><span class="tool">Canva</span><span class="tool">Buffer</span><span class="tool">Later</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sample">
+      <div class="section-head">
+        <h2>Sample carousel output</h2>
+        <p>Topic: <em>"5 signs your pet needs a vet visit"</em> — created for the Practo for Animals audience.</p>
+      </div>
+      <div class="sample-grid">
+        <div class="slide">
+          <img src="carousel-slide-1.svg" alt="Carousel slide: 5 signs your pet needs a vet visit" />
+        </div>
+        <div>
+          <h3>Slide-by-slide copy</h3>
+          <ol>
+            <li data-i="01"><strong>Hook:</strong> "5 signs your pet needs a vet visit"</li>
+            <li data-i="02"><strong>Slide 1:</strong> Sudden loss of appetite for &gt;24 hours</li>
+            <li data-i="03"><strong>Slide 2:</strong> Unusual lethargy or hiding</li>
+            <li data-i="04"><strong>Slide 3:</strong> Repeated vomiting or diarrhoea</li>
+            <li data-i="05"><strong>Slide 4:</strong> Difficulty breathing or wheezing</li>
+            <li data-i="06"><strong>Slide 5:</strong> Limping or refusing to put weight on a leg</li>
+            <li data-i="07"><strong>CTA:</strong> "Find a trusted vet near you"</li>
+          </ol>
+          <p class="caption">Full 1080×1080 7-slide carousel exported as PNGs from Canva. Icons generated with AI; typography and colours locked to the brand kit.</p>
+        </div>
+      </div>
+      <div class="takeaways">
+        <div class="box"><h4>Time saved</h4><p>Designer-free first draft in ~10 minutes vs. 2–3 hours manually.</p></div>
+        <div class="box"><h4>Brand consistency</h4><p>Locked colours, fonts and layouts keep every post recognisable.</p></div>
+        <div class="box"><h4>Human in the loop</h4><p>Founder approves every slide before publishing — no rogue AI posts.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap">Content Engine · concept prototype</div></footer>
+</body>
+</html>

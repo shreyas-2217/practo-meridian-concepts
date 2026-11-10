@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meridian AI — Practical AI skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#0A0D12;
+      --panel:#10141A;
+      --surface:#161C24;
+      --line:#253039;
+      --cream:#F4EFE9;
+      --muted:#8B97A4;
+      --mint:#67D7C4;
+      --mint-2:#3CAF9E;
+      --violet:#B89EF0;
+      --amber:#F0B65A;
+      --ease:cubic-bezier(.25,.46,.45,.94);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--ink);color:var(--cream);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    h1,h2,h3{font-family:'Fraunces',Georgia,serif;letter-spacing:-.03em;line-height:.98}
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(1180px,92%);margin:0 auto;padding:0 0 100px}
+
+    nav{padding:22px 0;position:fixed;inset:0 0 auto 0;z-index:30;background:rgba(10,13,18,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+    nav .inner{width:min(1160px,94%);margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+    .brand{font-family:'Fraunces',serif;font-weight:800;font-size:1.25rem;display:flex;align-items:center;gap:10px;letter-spacing:-0.02em}
+    .logo{width:34px;height:34px;background:linear-gradient(135deg,var(--mint),var(--violet));border-radius:2px;display:inline-block}
+    .navlinks{display:flex;gap:34px;align-items:center;font-size:.85rem;font-weight:600;color:var(--muted)}
+    .navlinks a{padding:6px 0;position:relative}
+    .navlinks a::after{content:'';position:absolute;bottom:2px;left:0;width:0;height:1.5px;background:var(--mint);transition:.3s var(--ease)}
+    .navlinks a:hover{color:var(--cream)}.navlinks a:hover::after{width:100%}
+    .nav-cta{font-family:'IBM Plex Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;background:var(--mint);color:var(--ink);padding:10px 16px;border-radius:2px;font-weight:700}
+
+    .hero{padding:175px 0 90px;position:relative;overflow:hidden;background:radial-gradient(circle at 75% -10%,rgba(184,158,240,.12),transparent 34%),radial-gradient(circle at 20% 120%,rgba(103,215,196,.07),transparent 30%),var(--ink)}
+    .hero-bg{position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.18}
+    .hero-bg svg{width:100%;height:100%}
+    .hero .wrap{position:relative;z-index:1}
+    .kicker{font-family:'IBM Plex Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;color:var(--amber);margin-bottom:22px;display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);padding:8px 14px;border-radius:2px}
+    .kicker span{width:5px;height:5px;background:var(--mint);border-radius:50%;animation:pulse 2.2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+    .hero h1{font-size:clamp(3rem,6vw,5.6rem);max-width:880px;margin:0 auto;text-align:center;font-weight:800;letter-spacing:-.035em}
+    .hero h1 em{font-style:italic;background:linear-gradient(90deg,var(--mint),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero > p{color:var(--muted);max-width:620px;margin:24px auto 0;font-size:1.1rem;line-height:1.65;text-align:center}
+    .hero-actions{display:flex;justify-content:center;gap:14px;margin-top:40px;flex-wrap:wrap}
+    .btn{padding:14px 26px;border-radius:2px;font-weight:700;font-size:.88rem;display:inline-flex;align-items:center;gap:7px;transition:.22s var(--ease);border:none;cursor:pointer;font-family:'Fraunces',serif}
+    .btn-primary{background:var(--mint);color:var(--ink)}
+    .btn-primary:hover{background:var(--mint-2);transform:translateY(-2px)}
+    .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--cream);font-family:'Inter',sans-serif}
+    .btn-ghost:hover{border-color:var(--violet);color:var(--violet)}
+
+    .bento{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:58px}
+    .bcard{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:22px;transition:.25s var(--ease)}
+    .bcard:hover{border-color:rgba(184,158,240,.35);transform:translateY(-4px)}
+    .bcard.small{grid-column:span 1}
+    .bcard.wide{grid-column:span 2}
+    .bcard small{font-family:'IBM Plex Mono',monospace;font-size:.55rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:10px}
+    .bcard strong{font-family:'Fraunces',serif;font-size:1.8rem;display:block;line-height:1;color:#fff}
+    .bcard span{font-size:.82rem;color:var(--muted);display:block;margin-top:6px;line-height:1.42}
+
+    .trust{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:42px;border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--panel)}
+    .trust div{text-align:center;border-left:1px solid var(--line);padding:24px 16px;min-width:100px}
+    .trust div:first-child{border-left:none}
+    .trust strong{font-family:'Fraunces',serif;font-size:2.1rem;display:block;line-height:1;color:#fff}
+    .trust span{font-size:.72rem;color:var(--muted);font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.04em}
+
+    .tracks{padding-top:90px}
+    .section-head{margin-bottom:46px;text-align:center}
+    .section-head h2{font-size:2.6rem;color:#fff}
+    .section-head p{color:var(--muted);margin-top:10px;max-width:540px;margin-left:auto;margin-right:auto;line-height:1.55}
+    .switch{display:flex;gap:6px;background:var(--panel);border:1px solid var(--line);padding:6px;border-radius:3px;width:fit-content;margin:0 auto 44px}
+    .switch button{background:transparent;border:none;color:var(--muted);padding:12px 24px;border-radius:2px;font-weight:700;font-size:.85rem;cursor:pointer;transition:.2s;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.03em}
+    .switch button.active{background:var(--surface);color:var(--cream);border:1px solid var(--line)}
+
+    .curriculum{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+    .module{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:28px;transition:.3s var(--ease);position:relative;overflow:hidden}
+    .module:hover{border-color:rgba(184,158,240,.4);transform:translateY(-5px);box-shadow:0 24px 60px rgba(0,0,0,.25)}
+    .module::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--mint),var(--violet));transform:scaleX(0);transform-origin:left;transition:.45s var(--ease)}
+    .module:hover::after{transform:scaleX(1)}
+    .wk{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--violet);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+    .module h3{font-size:1.15rem;color:#fff;margin-bottom:12px}
+    .module ul{list-style:none;font-size:.9rem;color:var(--muted);line-height:1.55}
+    .module li{padding:10px 0;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;gap:10px}
+    .module li:last-child{border-bottom:none}
+    .module li::before{content:'';width:6px;height:6px;border-radius:1px;background:var(--mint);margin-top:7px;flex-shrink:0}
+
+    .journey{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:54px;margin-top:100px;position:relative;overflow:hidden}
+    .journey h2{font-size:2.1rem;text-align:center;color:#fff}
+    .journey > p{color:var(--muted);margin:10px auto 42px;text-align:center;max-width:600px;line-height:1.55}
+    .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0;position:relative}
+    .step{padding:30px 20px;border-left:1px solid var(--line);position:relative;transition:.25s}
+    .step:first-child{border-left:none}
+    .step:hover{background:rgba(184,158,240,.03)}
+    .step::after{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--mint);position:absolute;top:22px;right:22px;content:attr(data-step)}
+    .step h4{font-size:1.05rem;color:#fff;margin-bottom:10px}
+    .step p{font-size:.84rem;color:var(--muted);line-height:1.55}
+
+    .reg-card{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:54px;margin-top:90px;display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:start}
+    .reg-card h2{font-size:2.1rem;color:#fff}
+    .reg-card > p{color:var(--muted);margin:14px 0 34px;max-width:460px;line-height:1.6}
+    form{display:grid;gap:16px}
+    label{font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-family:'IBM Plex Mono',monospace}
+    input,select,textarea{background:var(--ink);border:1.5px solid var(--line);border-radius:2px;padding:16px 18px;color:var(--cream);font-family:inherit;outline:none;font-size:.96rem;transition:.2s}
+    input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 0 0 3px rgba(184,158,240,.08)}
+    .check{display:flex;gap:10px;align-items:flex-start;font-size:.85rem;color:var(--muted)}
+    .check input{margin-top:3px}
+    .quote{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:26px;margin-top:32px;position:relative}
+    .quote p{font-style:italic;color:#D9DDE2;line-height:1.6;font-size:1.05rem;font-family:'Fraunces',serif}
+    .quote small{color:var(--muted);display:block;margin-top:14px;font-size:.82rem}
+
+    footer{padding:0 0 50px;text-align:center;color:var(--muted);font-size:.85rem}
+    footer .wrap{padding:30px 0;border-top:1px solid var(--line)}
+
+    @media (max-width:880px){
+      .navlinks{display:none}
+      .hero h1{font-size:clamp(2.4rem,9vw,3.8rem)}
+      .bento{grid-template-columns:1fr}
+      .bcard.wide{grid-column:span 1}
+      .trust div{border-left:none;border-top:1px solid var(--line);padding:18px 0}
+      .trust div:first-child{border-top:none}
+      .steps{grid-template-columns:1fr}
+      .step{border-left:none;border-top:1px solid var(--line);padding:26px 0}
+      .step:first-child{border-top:none}
+      .reg-card{grid-template-columns:1fr}
+      .curriculum{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="inner">
+      <a href="index.html" class="brand"><span class="logo"></span>Meridian AI</a>
+      <div class="navlinks">
+        <a href="#tracks">Programmes</a>
+        <a href="#journey" class="">How it works</a>
+        <a href="#register">Register</a>
+        <a href="index.html" class="nav-cta">Back to concepts</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-bg">
+        <svg viewBox="0 0 1440 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs><pattern id="lines" width="120" height="120" patternUnits="userSpaceOnUse"><path d="M0 120L120 0M-30 30L30 -30M90 150L150 90" stroke="#67D7C4" stroke-width="1" fill="none" opacity=".15"/></pattern></defs>
+          <rect width="1440" height="700" fill="url(#lines)"/>
+          <circle cx="1180" cy="160" r="120" stroke="#67D7C4" stroke-width="1" fill="none" opacity=".18"/>
+          <circle cx="1280" cy="240" r="80" stroke="#B89EF0" stroke-width="1" fill="none" opacity=".2"/>
+        </svg>
+      </div>
+      <div class="kicker"><span></span>New cohort: Jan 2026</div>
+      <h1>Learn AI and digital skills that actually <em>get you hired.</em></h1>
+      <p>Hands-on programmes for students and young professionals in India. No coding degree needed — just projects you can ship on day one.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#register">Register for info session</a>
+        <a class="btn btn-ghost" href="#tracks">Explore programmes</a>
+      </div>
+
+      <div class="bento">
+        <div class="bcard wide"><small>Upskilling market</small><strong>24M+</strong><span>students learning online annually</span></div>
+        <div class="bcard"><small>Entry premium</small><strong>₹4.2 L</strong><span>median fresher AI-skilled salary</span></div>
+        <div class="bcard"><small>Hiring spike</small><strong>+38%</strong><span>YoY growth in AI job postings</span></div>
+      </div>
+
+      <div class="trust">
+        <div><strong>4 weeks</strong><span>Core sprint</span></div>
+        <div><strong>12 weeks</strong><span>Advanced track</span></div>
+        <div><strong>Project-first</strong><span>Portfolio built</span></div>
+        <div><strong>1:1</strong><span>Career guidance</span></div>
+      </div>
+    </section>
+
+    <section class="tracks" id="tracks">
+      <div class="section-head">
+        <h2>Pick a track built around your goal</h2>
+        <p>Each programme ends with a publishable project and a certificate.</p>
+      </div>
+      <div class="switch">
+        <button class="active" data-track="fundamentals">AI Fundamentals</button>
+        <button data-track="creator">AI Creator Stack</button>
+        <button data-track="automation">Automation & No-Code</button>
+      </div>
+      <div class="curriculum" id="curriculum">
+        <article class="module" data-track="fundamentals">
+          <span class="wk">Week 1</span>
+          <h3>AI Literacy & Prompt Engineering</h3>
+          <ul><li>ChatGPT, Claude & Gemini patterns</li><li>Prompt frameworks & iteration</li><li>Ethics, limits & fact-checking</li></ul>
+        </article>
+        <article class="module" data-track="fundamentals">
+          <span class="wk">Week 2</span>
+          <h3>Useful AI for Work</h3>
+          <ul><li>Documents, sheets & slide decks</li><li>Email & meeting summarisers</li><li>Research & note-taking workflows</li></ul>
+        </article>
+        <article class="module" data-track="creator">
+          <span class="wk">Week 1</span>
+          <h3>Brand & Content Strategy</h3>
+          <ul><li>Audience research with AI</li><li>Content pillars & calendar</li><li>Tone-of-voice frameworks</li></ul>
+        </article>
+        <article class="module" data-track="creator">
+          <span class="wk">Week 2</span>
+          <h3>Visual Production</h3>
+          <ul><li>AI image & video tools</li><li>Canva/Figma automation</li><li>Carousel & reel templates</li></ul>
+        </article>
+        <article class="module" data-track="automation">
+          <span class="wk">Week 1</span>
+          <h3>No-Code Foundations</h3>
+          <ul><li>Databases & forms</li><li>Zapier / Make basics</li><li>Webhook triggers</li></ul>
+        </article>
+        <article class="module" data-track="automation">
+          <span class="wk">Week 2</span>
+          <h3>Build a Real Workflow</h3>
+          <ul><li>Lead-capture bot</li><li>Auto-responder & CRM</li><li>Analytics dashboard</li></ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="journey" id="journey">
+      <h2>The registration and lead-capture journey</h2>
+      <p>Designed to remove friction, build trust, and convert interest into enrolled learners.</p>
+      <div class="steps">
+        <div class="step" data-step="01"><h4>Land on page</h4><p>Hero clarifies value; social proof and CTAs appear above the fold.</p></div>
+        <div class="step" data-step="02"><h4>Choose a track</h4><p>Switchable curriculum surfaces the right modules for each visitor.</p></div>
+        <div class="step" data-step="03"><h4>Register interest</h4><p>Short form captures name, email, goal and experience level.</p></div>
+        <div class="step" data-step="04"><h4>Instant confirmation</h4><p>Automated email + calendar link for a free info call.</p></div>
+        <div class="step" data-step="05"><h4>Nurture & enrol</h4><p>WhatsApp/email sequence shares syllabus, dates, payment and onboarding.</p></div>
+      </div>
+    </section>
+
+    <section class="reg-card" id="register">
+      <div>
+        <h2>Get the syllabus and join the info session</h2>
+        <p>Enter your details and we'll send a calendar invite + programme brochure. No spam.</p>
+        <div class="quote">
+          <p>"In four weeks I went from never using AI to automating half my internship tasks. The project reviews were the best part."</p>
+          <small>— Priya R., 2026 cohort</small>
+        </div>
+      </div>
+      <form id="leadForm">
+        <div><label for="name">Full name</label><input id="name" placeholder="e.g. Ankit Mehta" required /></div>
+        <div><label for="email">Email</label><input type="email" id="email" placeholder="ankit@example.com" required /></div>
+        <div><label for="phone">Phone (optional)</label><input id="phone" placeholder="+91 ..." /></div>
+        <div><label for="goal">I'm most interested in</label>
+          <select id="goal"><option>AI Fundamentals</option><option>AI Creator Stack</option><option>Automation & No-Code</option><option>Not sure yet</option></select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="justify-content:center">Register for info session</button>
+        <label class="check"><input type="checkbox" checked /> I agree to receive programme updates.</label>
+      </form>
+    </section>
+  </main>
+
+  <footer><div class="wrap">Meridian AI Academy · concept prototype</div></footer>
+
+  <script>
+    const tabs=document.querySelectorAll('.switch button');
+    const mods=document.querySelectorAll('.module');
+    tabs.forEach(t=>t.addEventListener('click',()=>{
+      tabs.forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      const track=t.dataset.track;
+      mods.forEach(m=>m.style.display=m.dataset.track===track?'':'none');
+    }));
+    tabs[0].click();
+    document.getElementById('leadForm').addEventListener('submit',e=>{
+      e.preventDefault();
+      const btn=e.target.querySelector('button');
+      btn.textContent='Registered — check your inbox!';
+      btn.style.background='var(--violet)';
+      setTimeout(()=>{btn.textContent='Register for info session';btn.style.background='';},2500);
+    });
+  </script>
+</body>
+</html>
